@@ -3,16 +3,16 @@ package com.helena128.paymentmanager.model;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 public class PaymentDto {
 
     private String cardHolderName;
     private String cardNumber;
-    private LocalDate localDate;
+    private LocalDate expiryDate;
     private String cvv;
-    private LocalDateTime createdDateTime;
+    private Instant createdDateTime;
     private BigDecimal sum;
 }

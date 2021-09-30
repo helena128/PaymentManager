@@ -1,30 +1,27 @@
 package com.helena128.paymentmanager.service;
 
-import com.helena128.paymentmanager.entity.PaymentEntity;
+import com.helena128.paymentmanager.mapper.PaymentMapper;
 import com.helena128.paymentmanager.model.PaymentDto;
 import com.helena128.paymentmanager.repository.PaymentRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
+import reactor.core.publisher.Mono;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class PaymentServiceImpl implements PaymentService {
 
-    @Autowired
-    private PaymentRepository paymentRepository;
+    private final PaymentRepository paymentRepository;
+    private final PaymentMapper paymentMapper;
 
-    @PostConstruct
-    public void init() {
-        paymentRepository.save(PaymentEntity.builder()
-                .cardHolderName("Jane Ivanova")
-                .build()).block();
-    }
-
-    @Override
-    public PaymentDto createPayment(final PaymentDto paymentDto) {
-        return null;
+    @Override // TODO: handle transactions
+    public Mono<PaymentDto> createPayment(final PaymentDto paymentDto) {
+        return Mono.just(paymentDto)
+                .map(paymentMapper::paymentDtoToEntity)
+                .flatMap(paymentRepository::save)
+                // todo: publish to kafka
+                .map(paymentMapper::paymentEntityToDto);
     }
 }
