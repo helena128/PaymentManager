@@ -23,6 +23,6 @@ public class PaymentController {
     @PostMapping
     public Publisher<ResponseEntity<String>> createPayment(@RequestBody PaymentDto paymentDto) {
         return paymentService.createPayment(paymentDto)
-                .map(payment -> ResponseEntity.ok(SUCCESSFUL_CREATION_MSG.getValue()));
+                .map(paymentId -> ResponseEntity.ok(SUCCESSFUL_CREATION_MSG.getValue()));
     }
 }

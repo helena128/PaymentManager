@@ -1,15 +1,17 @@
 spring:
-  r2dbc:
-    url: r2dbc:pool:postgres://localhost:5432/postgres
-    username: postgres
-    password: postgres
-#    properties:
-#      sslMode: REQUIRE #TODO
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: admin
+      password: password
+      authentication-database: admin
+      database: payments
 
 logging:
   level:
     org:
       springframework:
         data:
-          r2dbc: DEBUG
-      liquibase: DEBUG
+          mongo: DEBUG
+    com.helena128.paymentmanager: DEBUG

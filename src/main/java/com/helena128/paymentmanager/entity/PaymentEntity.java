@@ -1,43 +1,33 @@
 package com.helena128.paymentmanager.entity;
 
+import com.helena128.paymentmanager.model.CardHolderInfo;
+import com.helena128.paymentmanager.model.CardInfo;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.Instant;
-import java.time.LocalDate;
 
+@Document(value = "payments")
 @Data
-@Builder
-@Table(value = "payments")
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentEntity {
 
-    @Id
-    private BigInteger id;
+    @MongoId
+    // TODO: fix
+    private String id;
 
-    @Column(value = "cardholder_name")
-    private String cardHolderName;
+    private CardHolderInfo cardHolderInfo;
 
-    @Column(value = "card_number") // TODO: type + encryption
-    private String cardNumber;
+    private CardInfo cardInfo;
 
-    @Column(value = "expiry_date")
-    private LocalDate expiryDate;
-
-    @Column(value = "cvv") // TODO: type + encryption
-    private String cvv;
-
-    @Column(value = "created_datetime")
-    private Instant createdDateTime;
-
-    @Column(value = "sum")
     private BigDecimal sum;
+
+    private String recipient;
+
+    private Instant createdDateTime;
 }

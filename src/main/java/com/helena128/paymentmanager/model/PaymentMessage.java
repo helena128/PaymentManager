@@ -1,21 +1,23 @@
 package com.helena128.paymentmanager.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
-import java.time.LocalDate;
 
 @Data
-public class PaymentDto {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class PaymentMessage {
 
     private String id;
-    private String cardHolderName;
-    private String cardHolderEmail;
+    private CardHolderInfo cardHolderInfo;
     private String cardNumber;
-    private LocalDate expiryDate;
-    private String cvc;
     private String recipient;
     private BigDecimal sum;
     private Instant createdDateTime;

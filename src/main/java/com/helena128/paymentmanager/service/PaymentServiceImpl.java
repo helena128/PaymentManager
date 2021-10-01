@@ -1,7 +1,10 @@
 package com.helena128.paymentmanager.service;
 
+import com.helena128.paymentmanager.entity.PaymentEntity;
+import com.helena128.paymentmanager.kafka.PaymentMessageProducer;
 import com.helena128.paymentmanager.mapper.PaymentMapper;
 import com.helena128.paymentmanager.model.PaymentDto;
+import com.helena128.paymentmanager.model.PaymentMessage;
 import com.helena128.paymentmanager.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,13 +18,16 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final PaymentMapper paymentMapper;
+    private final PaymentMessageProducer messageProducer;
 
     @Override // TODO: handle transactions
-    public Mono<PaymentDto> createPayment(final PaymentDto paymentDto) {
+    public Mono<String> createPayment(final PaymentDto paymentDto) {
         return Mono.just(paymentDto)
                 .map(paymentMapper::paymentDtoToEntity)
+                .doOnNext(payment -> log.debug("Saved entity with id: {}", payment.getId()))
                 .flatMap(paymentRepository::save)
-                // todo: publish to kafka
-                .map(paymentMapper::paymentEntityToDto);
+                .map(paymentMapper::paymentEntityToPaymentMessage)
+                .flatMap(messageProducer::sendPaymentMessage)
+                .doOnNext(msgId -> log.debug("Sent kafka msg with id={}", msgId));
     }
 }

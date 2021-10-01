@@ -9,3 +9,16 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+
+  mongo:
+    image: 'mongo'
+    container_name: 'mongodb'
+    environment:
+      - MONGO_INITDB_DATABASE=payments
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    #volumes:
+      #- ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      #- ./mongo-volume:/data/db
+    ports:
+      - '27017-27019:27017-27019'
