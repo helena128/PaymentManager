@@ -1,5 +1,6 @@
-package com.helena128.paymentmanager.mail;
+package com.helena128.paymentmanager.notification.kafka;
 
+import com.helena128.paymentmanager.notification.MessageProcessor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

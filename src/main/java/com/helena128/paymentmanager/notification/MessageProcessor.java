@@ -1,8 +1,10 @@
-package com.helena128.paymentmanager.mail;
+package com.helena128.paymentmanager.notification;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.helena128.paymentmanager.notification.config.MailPropertiesConfiguration;
 import com.helena128.paymentmanager.model.CardHolderInfo;
 import com.helena128.paymentmanager.model.PaymentMessage;
+import com.helena128.paymentmanager.notification.mail.MailSender;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;

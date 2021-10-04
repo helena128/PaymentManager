@@ -1,4 +1,4 @@
-package com.helena128.paymentmanager.entity;
+package com.helena128.paymentmanager.payment.entity;
 
 import com.helena128.paymentmanager.model.CardHolderInfo;
 import com.helena128.paymentmanager.model.CardInfo;

@@ -1,4 +1,4 @@
-package com.helena128.paymentmanager.kafka;
+package com.helena128.paymentmanager.payment.kafka;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;

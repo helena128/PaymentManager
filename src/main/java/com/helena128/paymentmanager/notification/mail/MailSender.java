@@ -1,5 +1,6 @@
-package com.helena128.paymentmanager.mail;
+package com.helena128.paymentmanager.notification.mail;
 
+import com.helena128.paymentmanager.notification.config.MailPropertiesConfiguration;
 import com.hubspot.smtp.client.SmtpClientResponse;
 import com.hubspot.smtp.client.SmtpSessionConfig;
 import com.hubspot.smtp.client.SmtpSessionFactory;

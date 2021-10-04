@@ -1,7 +1,7 @@
-package com.helena128.paymentmanager.controller;
+package com.helena128.paymentmanager.payment.controller;
 
 import com.helena128.paymentmanager.model.PaymentDto;
-import com.helena128.paymentmanager.service.PaymentService;
+import com.helena128.paymentmanager.payment.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.reactivestreams.Publisher;
 import org.springframework.http.MediaType;

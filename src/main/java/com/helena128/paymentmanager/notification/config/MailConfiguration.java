@@ -1,4 +1,4 @@
-package com.helena128.paymentmanager.mail;
+package com.helena128.paymentmanager.notification.config;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.hubspot.smtp.client.SmtpSessionConfig;

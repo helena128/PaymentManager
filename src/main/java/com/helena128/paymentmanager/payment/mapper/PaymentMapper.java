@@ -1,6 +1,6 @@
-package com.helena128.paymentmanager.mapper;
+package com.helena128.paymentmanager.payment.mapper;
 
-import com.helena128.paymentmanager.entity.PaymentEntity;
+import com.helena128.paymentmanager.payment.entity.PaymentEntity;
 import com.helena128.paymentmanager.model.PaymentDto;
 import com.helena128.paymentmanager.model.PaymentMessage;
 import org.mapstruct.Mapper;

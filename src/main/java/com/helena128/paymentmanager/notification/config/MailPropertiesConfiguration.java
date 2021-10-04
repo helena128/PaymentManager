@@ -1,4 +1,4 @@
-package com.helena128.paymentmanager.mail;
+package com.helena128.paymentmanager.notification.config;
 
 import lombok.Getter;
 import lombok.Setter;
