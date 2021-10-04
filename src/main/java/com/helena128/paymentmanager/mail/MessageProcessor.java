@@ -1,13 +1,17 @@
 package com.helena128.paymentmanager.mail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.helena128.paymentmanager.model.CardHolderInfo;
 import com.helena128.paymentmanager.model.PaymentMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuples;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,21 +29,26 @@ public class MessageProcessor {
     public Mono<Void> processMessage(final String message) {
         return Mono.just(message)
                 .map(this::readMessage)
-                .map(this::buildMessage)
-                .flatMap(msg -> mailSender.sendEmail(msg, "hellogbel@gmail.com")); // TODO
+                .filter(this::isValidMessage)
+                .map(msg -> Tuples.of(msg, buildMessage(msg)))
+                .flatMap(msg -> mailSender.sendEmail(msg.getT2(), msg.getT1().getCardHolderInfo().getEmail()));
+    }
+
+    private boolean isValidMessage(final PaymentMessage paymentMessage) {
+        return Objects.nonNull(paymentMessage.getId()) && Objects.nonNull(paymentMessage.getSum())
+                && Objects.nonNull(paymentMessage.getCardHolderInfo()) && Objects.nonNull(paymentMessage.getCardHolderInfo().getEmail());
     }
 
     private String buildMessage(final PaymentMessage msg) {
-        /*Map<String, String> propertyMap = Map.of("{sender}", properties.getUsername(),
-                "{recipient}", msg.getCardHolderInfo().getEmail(),
-        "{orderId}", msg.getId(),
+        Map<String, String> propertyMap = Map.of("{sender}", properties.getUsername(),
+                "{recipient}", Optional.ofNullable(msg.getCardHolderInfo()).map(CardHolderInfo::getEmail).orElse("username"),
+                "{orderId}", msg.getId(),
                 "{sum}", msg.getSum().toString());
         String result = TEMPLATE;
         for (Map.Entry<String, String> entry : propertyMap.entrySet()) {
             result = result.replace(entry.getKey(), entry.getValue());
         }
-        return result;*/
-        return TEMPLATE;
+        return result;
     }
 
     @SneakyThrows
