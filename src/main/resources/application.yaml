@@ -8,6 +8,11 @@ spring:
       authentication-database: admin
       database: payments
 
+notification:
+  email:
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+
 logging:
   level:
     org:

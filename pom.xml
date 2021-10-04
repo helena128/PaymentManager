@@ -68,6 +68,13 @@
             <artifactId>kafka-clients</artifactId>
 			<version>1.0.2</version>
         </dependency>
+
+        <!-- Mail -->
+        <dependency>
+            <groupId>com.hubspot</groupId>
+            <artifactId>NioSmtpClient</artifactId>
+            <version>1.1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -102,6 +109,8 @@
                             <version>${org.mapstruct.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                    <source>9</source>
+                    <target>9</target>
                 </configuration>
             </plugin>
         </plugins>

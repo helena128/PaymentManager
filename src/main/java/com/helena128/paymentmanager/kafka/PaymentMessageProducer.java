@@ -37,12 +37,13 @@ public class PaymentMessageProducer {
                         .map(this::buildProducerRecord)
                         .map(rec -> SenderRecord.create(rec, paymentMessage.getId())))
                 .collectList()
-                .map(list -> paymentMessage.getId()); // TODO: add retry
+                .map(list -> paymentMessage.getId())
+                .doOnNext(msgId -> log.info("Sent message with id={}", msgId)); // TODO: add retry
     }
 
     @SneakyThrows
     private ProducerRecord<String, String> buildProducerRecord(final PaymentMessage paymentMessage) {
-        return new ProducerRecord<String, String>("payments", paymentMessage.getId(),
+        return new ProducerRecord<String, String>("payments", paymentMessage.getId(), // TODO: move opic name to configuration
                 objectMapper.writeValueAsString(paymentMessage));
     }
 

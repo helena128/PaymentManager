@@ -33,7 +33,7 @@ public class KafkaConfig {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(ProducerConfig.CLIENT_ID_CONFIG, "payments-producer");
         props.put(ProducerConfig.ACKS_CONFIG, "all");
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class);
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         SenderOptions<String, String> senderOptions = SenderOptions.create(props);
         return KafkaSender.create(senderOptions);
