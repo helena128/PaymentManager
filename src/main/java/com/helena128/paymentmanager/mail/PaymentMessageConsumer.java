@@ -21,14 +21,14 @@ public class PaymentMessageConsumer {
 
     public Disposable consumeMessage() {
         return kafkaReceiver.receive()
-                .flatMap(record -> processor.processMessage(record.value()).map(res -> record))
-                .subscribe(
-                        record -> {
+                .flatMap(record -> processor.processMessage(record.value())
+                        .doOnSuccess(res -> {
                             ReceiverOffset offset = record.receiverOffset();
-                            // todo: handle message
-                            log.info("Received message with id={}", record.key());
+                            log.info("Successfully handled message with id={}", record.key());
                             offset.acknowledge();
-                        }
-                );
+                        })
+                        .doOnError(ex -> log.error("Exception {} happened while processing msg with id = {}", ex.getMessage(), record.key()))
+                )
+                .subscribe();
     }
 }
