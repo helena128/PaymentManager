@@ -27,8 +27,8 @@ public class PaymentServiceImpl implements PaymentService {
         return Mono.just(paymentDto)
                 .map(this::validate)
                 .map(paymentMapper::paymentDtoToEntity)
-                .doOnNext(payment -> log.debug("Saved entity with id: {}", payment.getId()))
                 .flatMap(paymentRepository::save)
+                .doOnNext(payment -> log.debug("Saved entity with id: {}", payment.getId()))
                 .map(paymentMapper::paymentEntityToPaymentMessage)
                 .flatMap(messageProducer::sendPaymentMessage);
     }

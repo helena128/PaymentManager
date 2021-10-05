@@ -12,6 +12,14 @@ notification:
   email:
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
+
+kafka:
+  topic: payments
+  bootstrapServers: ${KAFKA_SERVERS}
+  producerClientId: payments-producer
+  consumerClientId: payments-consumer
+  consumerGroup: payments-group
+
 crypto:
   password: ${CRYPTO_PASSWD}
   algorithm: ${CRYPTO_ALGO}

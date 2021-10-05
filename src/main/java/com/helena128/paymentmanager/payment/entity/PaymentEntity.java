@@ -3,6 +3,7 @@ package com.helena128.paymentmanager.payment.entity;
 import com.helena128.paymentmanager.model.CardHolderInfo;
 import com.helena128.paymentmanager.model.CardInfo;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,6 +15,7 @@ import java.time.Instant;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class PaymentEntity {
 
     private String id;

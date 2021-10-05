@@ -13,17 +13,9 @@ import java.util.Map;
 @Configuration
 public class KafkaConfig {
 
-/*    @Bean
-    public ObjectMapper objectMapper(ObjectMapper objectMapper) {
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.configure(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS, false);
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        return objectMapper;
-    }*/
-
     @Bean
     public KafkaSender<String, String> paymentMessageSender() {
-        Map<String, Object> props = new HashMap<>(); // TODO: init later
+        Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(ProducerConfig.CLIENT_ID_CONFIG, "payments-producer");
         props.put(ProducerConfig.ACKS_CONFIG, "all");
