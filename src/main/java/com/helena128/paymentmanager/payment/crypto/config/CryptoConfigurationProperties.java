@@ -1,4 +1,4 @@
-package com.helena128.paymentmanager.payment.crypto;
+package com.helena128.paymentmanager.payment.crypto.config;
 
 import lombok.Getter;
 import lombok.Setter;

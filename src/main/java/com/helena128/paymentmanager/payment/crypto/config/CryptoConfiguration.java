@@ -1,4 +1,4 @@
-package com.helena128.paymentmanager.payment.crypto;
+package com.helena128.paymentmanager.payment.crypto.config;
 
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.context.annotation.Bean;

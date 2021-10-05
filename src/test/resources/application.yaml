@@ -1,0 +1,22 @@
+spring:
+  data:
+    mongodb:
+      host: ${MONGO_HOST}
+      port: ${MONGO_PORT}
+      username: ${MONGO_USERNAME}
+      password: ${MONGO_PASSWORD}
+      authentication-database: ${MONGO_AUTH_DB}
+      database: ${MONGO_DB}
+
+notification:
+  email:
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+crypto:
+  password: test
+  algorithm: PBEWithMD5AndTripleDES
+
+logging:
+  level:
+    org.springframework.data.mongo: DEBUG
+    com.helena128.paymentmanager: DEBUG

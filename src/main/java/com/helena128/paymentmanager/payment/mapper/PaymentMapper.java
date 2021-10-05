@@ -3,7 +3,7 @@ package com.helena128.paymentmanager.payment.mapper;
 import com.helena128.paymentmanager.model.CardInfo;
 import com.helena128.paymentmanager.model.PaymentDto;
 import com.helena128.paymentmanager.model.PaymentMessage;
-import com.helena128.paymentmanager.payment.crypto.CryptoService;
+import com.helena128.paymentmanager.payment.crypto.CryptoServiceImpl;
 import com.helena128.paymentmanager.payment.entity.PaymentEntity;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public abstract class PaymentMapper {
     protected static final String CARD_TEMPLATE = "**** **** **** ";
 
     @Autowired
-    protected CryptoService cryptoService;
+    protected CryptoServiceImpl cryptoServiceImpl;
 
     public abstract PaymentEntity paymentDtoToEntity(PaymentDto paymentDto);
 
@@ -29,9 +29,9 @@ public abstract class PaymentMapper {
         paymentEntity.setCreatedDateTime(Instant.now());
         if (Objects.nonNull(paymentEntity.getCardInfo())) {
             paymentEntity.setCardInfo(CardInfo.builder()
-                    .cardNumber(cryptoService.encrypt(paymentEntity.getCardInfo().getCardNumber()))
-                    .cvc(cryptoService.encrypt(paymentEntity.getCardInfo().getCardNumber()))
-                    .expiryDate(cryptoService.encrypt(paymentEntity.getCardInfo().getExpiryDate()))
+                    .cardNumber(cryptoServiceImpl.encrypt(paymentEntity.getCardInfo().getCardNumber()))
+                    .cvc(cryptoServiceImpl.encrypt(paymentEntity.getCardInfo().getCardNumber()))
+                    .expiryDate(cryptoServiceImpl.encrypt(paymentEntity.getCardInfo().getExpiryDate()))
                     .build());
         }
     }
@@ -39,7 +39,7 @@ public abstract class PaymentMapper {
     @AfterMapping
     protected void postProcessPaymentMessage(@MappingTarget PaymentMessage paymentMessage) {
         if (Objects.nonNull(paymentMessage.getCardNumber()) && paymentMessage.getCardNumber().length() > 4) {
-            String cardNumber = cryptoService.decrypt(paymentMessage.getCardNumber());
+            String cardNumber = cryptoServiceImpl.decrypt(paymentMessage.getCardNumber());
             cardNumber = cardNumber.substring(cardNumber.length() - 4);
             paymentMessage.setCardNumber(CARD_TEMPLATE + cardNumber);
         }
