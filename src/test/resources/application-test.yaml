@@ -1,0 +1,25 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: admin
+      password: password
+      authentication-database: admin
+      database: payments-test
+
+kafka:
+  topic: payments-test
+  bootstrapServers: localhost:9092
+  producerClientId: payments-producer
+  consumerClientId: payments-consumer
+  consumerGroup: payments-group
+
+crypto:
+  password: Password123!
+  algorithm: PBEWithMD5AndTripleDES
+
+logging:
+  level:
+    org.springframework.data.mongo: DEBUG
+    com.helena128.paymentmanager: DEBUG
