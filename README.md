@@ -25,6 +25,7 @@ To get started with the application, the following steps are required.
 * Maven 3+ is installed
 * MongoDB is up and running, user credentials and database are created for application 
 * Kafka and Zookeeper are running, `payments` topic is created
+* Gmail account with extended permissions (grants to insecure apps)
 
 #### Building application
 To build and run application:
