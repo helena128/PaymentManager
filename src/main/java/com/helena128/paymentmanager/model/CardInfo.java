@@ -1,13 +1,13 @@
 package com.helena128.paymentmanager.model;
 
+import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
-
 @Data
+@Builder
 public class CardInfo {
 
     private String cardNumber;
-    private LocalDate expiryDate;
+    private String expiryDate;
     private String cvc; // 3-4 digits
 }

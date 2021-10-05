@@ -12,6 +12,9 @@ notification:
   email:
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
+crypto:
+  password: ${CRYPTO_PASSWD}
+  algorithm: ${CRYPTO_ALGO}
 
 logging:
   level:
