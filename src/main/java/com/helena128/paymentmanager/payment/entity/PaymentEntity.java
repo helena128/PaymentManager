@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -17,8 +16,6 @@ import java.time.Instant;
 @AllArgsConstructor
 public class PaymentEntity {
 
-    @MongoId
-    // TODO: fix
     private String id;
 
     private CardHolderInfo cardHolderInfo;

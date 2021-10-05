@@ -11,17 +11,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 import static com.helena128.paymentmanager.model.ResponseMessage.SUCCESSFUL_CREATION_MSG;
 
 @RestController
-@RequestMapping(value = "/payments", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/v1/payments", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class PaymentController {
 
     private final PaymentService paymentService;
 
     @PostMapping
-    public Publisher<ResponseEntity<String>> createPayment(@RequestBody PaymentDto paymentDto) {
+    public Publisher<ResponseEntity<String>> createPayment(@Valid @RequestBody PaymentDto paymentDto) {
         return paymentService.createPayment(paymentDto)
                 .map(paymentId -> ResponseEntity.ok(SUCCESSFUL_CREATION_MSG.getValue()));
     }
