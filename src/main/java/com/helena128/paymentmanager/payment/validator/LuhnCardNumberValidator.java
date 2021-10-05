@@ -17,7 +17,7 @@ public class LuhnCardNumberValidator implements PaymentValidator {
         final String cardNumber = Optional.ofNullable(paymentDto.getCardInfo())
                 .map(CardInfo::getCardNumber).orElse(null);
         if (!LuhnCheckDigit.LUHN_CHECK_DIGIT.isValid(cardNumber)) {
-            throw new PaymentException(ExceptionMessage.INVALID_CARD_NUMBER);
+            throw new PaymentException(ExceptionMessage.INVALID_CARD_NUMBER_MSG);
         }
     }
 }

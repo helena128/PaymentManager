@@ -32,6 +32,6 @@ public class LuhnCardNumberValidatorTest {
                         .cardNumber("12345678")
                         .build())
                 .build()));
-        Assertions.assertEquals(ExceptionMessage.INVALID_CARD_NUMBER.getValue(), paymentException.getMessage());
+        Assertions.assertEquals(ExceptionMessage.INVALID_CARD_NUMBER_MSG.getValue(), paymentException.getMessage());
     }
 }

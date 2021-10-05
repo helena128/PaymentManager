@@ -48,7 +48,8 @@ To pass properties either set env variables or pass following arguments to `java
 | CRYPTO_PASSWD | --crypto.algorithm | Algorithm applied for encryption/decryption of sensitive data | PBEWithMD5AndTripleDES |
 | CRYPTO_ALGO | --kafka.bootstrapServers | Kafka bootstrap servers | localhost:9092 |
 
-##### An example of successful request:
+### Examples
+##### Example of successful request
 
 Request path: `http://{BASE_URL}/v1/payments`.
 
@@ -72,6 +73,7 @@ Request path:
 ```
 
 Response: `200`, contains message `Successfully created information`
+
 Expected: a mail with information about transaction sent to the email of cardholder.
 
 #### Example of failed request (invalid card number):

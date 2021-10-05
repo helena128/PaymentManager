@@ -17,7 +17,7 @@ public abstract class PaymentMapper {
     protected static final String CARD_TEMPLATE = "**** **** **** ";
 
     @Autowired
-    protected CryptoServiceImpl cryptoServiceImpl;
+    protected CryptoServiceImpl cryptoService;
 
     public abstract PaymentEntity paymentDtoToEntity(PaymentDto paymentDto);
 
@@ -29,9 +29,9 @@ public abstract class PaymentMapper {
         paymentEntity.setCreatedDateTime(Instant.now());
         if (Objects.nonNull(paymentEntity.getCardInfo())) {
             paymentEntity.setCardInfo(CardInfo.builder()
-                    .cardNumber(cryptoServiceImpl.encrypt(paymentEntity.getCardInfo().getCardNumber()))
-                    .cvc(cryptoServiceImpl.encrypt(paymentEntity.getCardInfo().getCardNumber()))
-                    .expiryDate(cryptoServiceImpl.encrypt(paymentEntity.getCardInfo().getExpiryDate()))
+                    .cardNumber(cryptoService.encrypt(paymentEntity.getCardInfo().getCardNumber()))
+                    .cvc(cryptoService.encrypt(paymentEntity.getCardInfo().getCardNumber()))
+                    .expiryDate(cryptoService.encrypt(paymentEntity.getCardInfo().getExpiryDate()))
                     .build());
         }
     }
@@ -39,7 +39,7 @@ public abstract class PaymentMapper {
     @AfterMapping
     protected void postProcessPaymentMessage(@MappingTarget PaymentMessage paymentMessage) {
         if (Objects.nonNull(paymentMessage.getCardNumber()) && paymentMessage.getCardNumber().length() > 4) {
-            String cardNumber = cryptoServiceImpl.decrypt(paymentMessage.getCardNumber());
+            String cardNumber = cryptoService.decrypt(paymentMessage.getCardNumber());
             cardNumber = cardNumber.substring(cardNumber.length() - 4);
             paymentMessage.setCardNumber(CARD_TEMPLATE + cardNumber);
         }

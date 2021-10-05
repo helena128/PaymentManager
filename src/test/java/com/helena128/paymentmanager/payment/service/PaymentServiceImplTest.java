@@ -49,7 +49,7 @@ public class PaymentServiceImplTest {
                 .build();
         StepVerifier.create(paymentService.createPayment(paymentDto))
                 .expectErrorMatches(ex -> ex instanceof PaymentException
-                        && ExceptionMessage.INVALID_CARD_NUMBER.getValue().equals(ex.getMessage()))
+                        && ExceptionMessage.INVALID_CARD_NUMBER_MSG.getValue().equals(ex.getMessage()))
                 .verify();
     }
 
