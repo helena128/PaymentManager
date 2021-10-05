@@ -6,6 +6,7 @@ import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.*;
@@ -16,8 +17,12 @@ import java.util.Map;
 @Component
 public class CustomErrorWebExceptionHandler extends AbstractErrorWebExceptionHandler {
 
-    public CustomErrorWebExceptionHandler(ErrorAttributes errorAttributes, WebProperties.Resources resources, ApplicationContext applicationContext) {
+    public CustomErrorWebExceptionHandler(ErrorAttributes errorAttributes,
+                                          WebProperties.Resources resources,
+                                          ApplicationContext applicationContext,
+                                          ServerCodecConfigurer configurer) {
         super(errorAttributes, resources, applicationContext);
+        this.setMessageWriters(configurer.getWriters());
     }
 
     @Override
@@ -27,7 +32,7 @@ public class CustomErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
 
     private Mono<ServerResponse> renderErrorResponse(final ServerRequest serverRequest) {
         Map<String, Object> errorPropertiesMap = getErrorAttributes(serverRequest, false);
-        return ServerResponse.status(getHttpStatus(errorPropertiesMap))
+        return ServerResponse.status((HttpStatus) errorPropertiesMap.get(ResponseConstants.STATUS.getValue()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromObject(getErrorAttributes(errorPropertiesMap)));
     }
@@ -37,7 +42,7 @@ public class CustomErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
     }
 
     private HttpStatus getHttpStatus(final Map<String, Object> errorAttributes) {
-        int statusCode = (int) errorAttributes.get(ResponseConstants.STATUS.getValue());
+        int statusCode = (int) errorAttributes.get(ResponseConstants.STATUS .getValue());
         return HttpStatus.valueOf(statusCode);
     }
 }
