@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.helena128.paymentmanager.config.KafkaPropertiesConfig;
 import com.helena128.paymentmanager.model.PaymentMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -23,6 +24,7 @@ public class PaymentMessageProducer {
 
     private final KafkaSender<String, String> paymentMessageSender;
     private final ObjectMapper objectMapper;
+    private final KafkaPropertiesConfig kafkaPropertiesConfig;
 
     @PostConstruct
     public void init() {
@@ -38,12 +40,12 @@ public class PaymentMessageProducer {
                         .map(rec -> SenderRecord.create(rec, paymentMessage.getId())))
                 .collectList()
                 .map(list -> paymentMessage.getId())
-                .doOnNext(msgId -> log.info("Sent message with id={}", msgId)); // TODO: add retry
+                .doOnNext(msgId -> log.info("Sent message with id={}", msgId));
     }
 
     @SneakyThrows
     private ProducerRecord<String, String> buildProducerRecord(final PaymentMessage paymentMessage) {
-        return new ProducerRecord<String, String>("payments", paymentMessage.getId(), // TODO: move opic name to configuration
+        return new ProducerRecord<String, String>(kafkaPropertiesConfig.getTopic(), paymentMessage.getId(),
                 objectMapper.writeValueAsString(paymentMessage));
     }
 
