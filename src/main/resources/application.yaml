@@ -1,11 +1,11 @@
 spring:
+  application.name: payment-manager
   data:
     mongodb:
       host: ${MONGO_HOST}
       port: ${MONGO_PORT}
       username: ${MONGO_USERNAME}
       password: ${MONGO_PASSWORD}
-      authentication-database: ${MONGO_AUTH_DB}
       database: ${MONGO_DB}
 
 notification:
