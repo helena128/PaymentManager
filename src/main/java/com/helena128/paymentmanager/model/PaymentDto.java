@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 @Builder
 public class PaymentDto {
 
-    private String id;
     @NotNull
     @Valid
     private CardHolderInfo cardHolderInfo;
