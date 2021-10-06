@@ -16,37 +16,47 @@ consumes message and reacts to it (by sending an email)
 * [Spring WebFlux](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html)
 * [Reactive MongoDB](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo.reactive)
 * [Reactive Kafka](https://projectreactor.io/docs/kafka/release/reference/)
+* [Lombok](https://projectlombok.org/)
+* [MapStruct](https://mapstruct.org/)
 
 ### Getting started
 To get started with the application, the following steps are required.
 
 #### Prerequisites
-* JDK15+ is installed
-* Maven 3+ is installed
-* MongoDB is up and running, user credentials and database are created for application 
-* Kafka and Zookeeper are running, `payments` topic is created
+* Docker Engine and docker-compose
 * Gmail account with extended permissions (grants to insecure apps)
 
 #### Building application
 To build and run application:
- 1. use maven command `mvn clean package` to build a jar
- 2. run `java -jar target/payment-manager-0.0.1-SNAPSHOT.jar`.
+ 1. clone project `git@github.com:helena128/PaymentManager.git`
+ 2. navigate to the directory of the project.
+ 3. set env variables `MAIL_USERNAME` and `MAIL_PASSWORD` in `docker-compose.yaml`
+ 4. run `docker-compose up --build -d`
  
+ By default application starts on port `8080`.
+ 
+##### Application properties
 To pass properties either set env variables or pass following arguments to `java -jar` command:
 
 | Environment variable | Corresponding property | Description | Example |
 | ----| ----| ----| ----|
 | MONGO_HOST | --spring.data.mongodb.host | MongoDB host | `localhost` |
-| MONGO_PORT | --spring.data.mongodb.port | MongoDB port | 27017 |
-| MONGO_USERNAME | --spring.data.mongodb.username | MongoDB username | admin |
-| MONGO_PASSWORD | --spring.data.mongodb.password | MongoDB password | password |
-| MONGO_AUTH_DB | --spring.data.mongodb.authentication-database | MongoDB authentication db | admin |
-| MONGO_DB | --spring.data.mongodb.database | MongoDB database used in app | payments |
-| MAIL_USERNAME | --notification.email.username | Email address used to send mail | test@gmail.com |
-| MAIL_PASSWORD | --notification.email.password | Password to email address for sending notifications | Test123! |
-| KAFKA_SERVERS | --crypto.password | Password used in encryption/decryption of sensitive data | Password123! |
-| CRYPTO_PASSWD | --crypto.algorithm | Algorithm applied for encryption/decryption of sensitive data | PBEWithMD5AndTripleDES |
-| CRYPTO_ALGO | --kafka.bootstrapServers | Kafka bootstrap servers | localhost:9092 |
+| MONGO_PORT | --spring.data.mongodb.port | MongoDB port | `27017` |
+| MONGO_USERNAME | --spring.data.mongodb.username | MongoDB username | `admin` |
+| MONGO_PASSWORD | --spring.data.mongodb.password | MongoDB password | `password` |
+| MONGO_AUTH_DB | --spring.data.mongodb.authentication-database | MongoDB authentication db | `admin` |
+| MONGO_DB | --spring.data.mongodb.database | MongoDB database used in app | `payments` |
+| MAIL_USERNAME | --notification.email.username | Email address used to send mail | `test@gmail.com` |
+| MAIL_PASSWORD | --notification.email.password | Password to email address for sending notifications | `Test123!` |
+| KAFKA_SERVERS | --crypto.password | Password used in encryption/decryption of sensitive data | `Password123!` |
+| CRYPTO_PASSWD | --crypto.algorithm | Algorithm applied for encryption/decryption of sensitive data | `PBEWithMD5AndTripleDES` |
+| CRYPTO_ALGO | --kafka.bootstrapServers | Kafka bootstrap servers | `localhost:9092` |
+
+Default values for these properties (except gmail username and password) are set in docker-compose file.
+
+### API
+Service API is represented by [swagger document](https://github.com/helena128/PaymentManager/blob/master/src/main/resources/swagger.yaml),
+examples of the requests are given below.
 
 ### Examples
 ##### Example of successful request
@@ -103,3 +113,6 @@ Response: `400`, response body:
   "message": "Invalid card number!"
 }
 ```
+
+#### Contact
+In case of any questions feel free to contact me [Elena Cheprasova](mailto:elenatchepr@gmail.com?subject=[GitHub]).
