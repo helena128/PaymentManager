@@ -1,0 +1,101 @@
+swagger: '2.0'
+
+info:
+  version: '0.1'
+  title: Payment Manager API
+
+  description: |
+    Payment Manager service is a dedicated component for managing information about payments.
+
+  contact:
+    name: Elena Tcheprasova
+    email: elenatchepr@gmail.com
+    url: http://github.com/helena128
+
+host: localhost:8080
+basePath: /v1/
+
+consumes:
+  - application/json
+produces:
+  - application/json
+schemes:
+  - http
+  - https
+
+tags:
+  - name: "Payments"
+
+paths:
+
+  /payments:
+
+    post:
+      tags:
+        - "Payments"
+      summary: "Add information about a new transaction."
+      operationId: "createPayment"
+      parameters:
+        - $ref: '#/definitions/PaymentDto'
+      responses:
+        200:
+          description: "Successfully created information."
+        400:
+          description: "Invalid user input."
+
+definitions:
+
+  PaymentDto:
+    description: "Input information about payment."
+    type: object
+    properties:
+      cardHolderInfo:
+        $ref: '#/definitions/CardHolderInfo'
+      cardInfo:
+        $ref: '#/definitions/CardInfo'
+      recipient:
+        description: "Information about recipient."
+        type: string
+      sum:
+        description: "Sum of transaction."
+        type: number
+        format: double
+    required:
+      - cardHolderInfo
+      - cardInfo
+      - recipient
+      - sum
+
+  CardHolderInfo:
+    description: "Holds information about cardholder."
+    type: object
+    properties:
+      name:
+        description: "Name of cardholder."
+        type: string
+      email:
+        description: "Email of cardholder."
+        type: string
+    required:
+      - name
+      - email
+
+  CardInfo:
+    description: "Contains information about (credit/debit) card."
+    type: object
+    properties:
+      cardNumber:
+        description: "Card number. Is checked by Luhn algorithm."
+        type: string
+      expiryDate:
+        description: "Date when the card expires."
+        type: string
+        format: date
+      cvc:
+        description: "CVC field."
+        type: string
+    required:
+      - cardNumber
+      - expiryDate
+      - cvc
+
