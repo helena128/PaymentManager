@@ -1,14 +1,16 @@
-FROM openjdk:15-jdk-slim
-WORKDIR application
-COPY mvnw .
+FROM adoptopenjdk/openjdk15:x86_64-ubuntu-jdk-15.0.2_7 as build
+WORKDIR /app
+
+COPY mvnw pom.xml ./
 COPY .mvn .mvn
-COPY pom.xml .
 COPY src src
 
-RUN sed -i 's/\r$//' mvnw
 RUN chmod +x mvnw
-RUN ./mvnw clean package
+RUN ./mvnw package
 
-ARG JAR_FILE=target/payment-manager-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","app.jar"]
+# ------------------------------------------------------------------------------
+
+FROM adoptopenjdk/openjdk15:x86_64-ubuntu-jre-15.0.2_7
+
+COPY --from=build /app/target/payment-manager-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
