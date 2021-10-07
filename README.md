@@ -28,8 +28,8 @@ To get started with the application, the following steps are required.
 
 #### Building application
 To build and run application:
- 1. clone project `git@github.com:helena128/PaymentManager.git`
- 2. navigate to the directory of the project.
+ 1. clone project `git clone git@github.com:helena128/PaymentManager.git`
+ 2. navigate to the directory of the project `cd PaymentManager/`.
  3. to send payment notification via email provide credentials to SMTP (`MAIL_USERNAME` and `MAIL_PASSWORD`).
  For simplification, properties of Gmail SMTP server are hardcoded. 
  4. run `MAIL_USERNAME=test@gmail.com MAIL_PASSWORD=password docker-compose up --build`
